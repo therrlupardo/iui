@@ -22,15 +22,6 @@ class HelperUtils:
         return data_dir
 
     @staticmethod
-    def convert_dataset(data_dir):
-        for filename in glob.iglob(f"{data_dir}/**/*.*", recursive=True):
-            path = filename.split(os.sep)
-            class_name = path[-2]
-            new_dir = os.path.join(data_dir, class_name)
-            os.makedirs(new_dir, exist_ok=True)
-            shutil.move(filename, os.path.join(new_dir, path[-1]))
-
-    @staticmethod
     def save_model(model, class_names):
         print(f'Saving model {Configuration.model_name} and it\'s {len(class_names)} classes')
         model.save(f'{Configuration.models_location}/{Configuration.model_name}.h5')
