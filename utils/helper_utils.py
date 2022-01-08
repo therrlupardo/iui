@@ -22,16 +22,16 @@ class HelperUtils:
         return data_dir
 
     @staticmethod
-    def save_model(model, class_names):
+    def save_model(name, model, class_names):
         print(f'Saving model {Configuration.model_name} and it\'s {len(class_names)} classes')
-        model.save(f'{Configuration.models_location}/{Configuration.model_name}.h5')
+        model.save(f'{Configuration.models_location}/{name}')
 
-        with open(f"{Configuration.models_location}/{Configuration.model_name}_class_names.json", "w") as file:
+        with open(f"{Configuration.models_location}/{name}_class_names.json", "w") as file:
             json.dump(class_names, file)
 
     @staticmethod
     def load_model(model_name):
-        model = tf.keras.models.load_model(f'{Configuration.models_location}/{model_name}.h5')
+        model = tf.keras.models.load_model(f'{Configuration.models_location}/{model_name}')
 
         with open(f"{Configuration.models_location}/{model_name}_class_names.json") as file:
             class_names = json.load(file)

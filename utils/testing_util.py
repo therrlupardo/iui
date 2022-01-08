@@ -28,11 +28,10 @@ class TestingUtil:
         )
 
     @staticmethod
-    def test_with_test_set(model, class_names):
-        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-        test_data_location = f"{os.path.abspath('.')}{os.sep}test_data"
+    def test_with_test_set(model, class_names, test_data_path=Configuration.test_data_location):
+        print(class_names)
         results = []
-        for filename in glob.iglob(f"{test_data_location}/**/*.*", recursive=True):
+        for filename in glob.iglob(f"{test_data_path}/**/*.*", recursive=True):
             path = filename.split(os.sep)
             class_name = path[-2]
             predicted_class, prediction_certainty = TestingUtil.__test_model_with_image(
@@ -46,10 +45,16 @@ class TestingUtil:
                 filename.split(os.sep)[-1],
                 class_name,
                 predicted_class,
+                # class_names[predicted_class],
                 'Yes' if class_name == predicted_class else 'No'
             ))
 
         # pprint(results)
+        TestingUtil.pretty_print_results(results)
+        return results
+
+    @staticmethod
+    def pretty_print_results(results):
         print(pandas.core.frame.DataFrame(results, columns=['image', 'class', 'prediction', 'Correct']))
         correct = len(list(filter(lambda x: x[-1] == 'Yes', results)))
         total = len(results)
@@ -58,6 +63,7 @@ class TestingUtil:
     @staticmethod
     def __test_model_with_image(model, image_url, class_names, display_image=True):
         # print(f'Testing image: {image_url}')
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
         brick_path = tf.keras.utils.get_file(str(uuid.uuid4()), origin=image_url)
 
         img = tf.keras.utils.load_img(

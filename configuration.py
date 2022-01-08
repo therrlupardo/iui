@@ -6,7 +6,7 @@ class Configuration:
     epochs = 10
     models_location = './models'
     model_name = 'updated'
-    data_location = './data'
-    test_data_location = './test-data'
+    data_location = 'D:\\Studia\\magisterka\\sem2\\IUI\\data'
+    test_data_location = 'D:\\Studia\\magisterka\\sem2\\IUI\\data\\test_data'
     # name of existing model, which should be updated (for update_model_only_new_data)
     existing_model_name = 'initial'
