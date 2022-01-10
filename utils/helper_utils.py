@@ -23,7 +23,7 @@ class HelperUtils:
 
     @staticmethod
     def save_model(name, model, class_names):
-        print(f'Saving model {Configuration.model_name} and it\'s {len(class_names)} classes')
+        print(f'Saving model {name} and it\'s {len(class_names)} classes')
         model.save(f'{Configuration.models_location}/{name}')
 
         with open(f"{Configuration.models_location}/{name}_class_names.json", "w") as file:
